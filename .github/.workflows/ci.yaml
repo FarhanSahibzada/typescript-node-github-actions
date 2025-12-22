@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Continous Integration Workflow
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: "Run Test"
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: "Checkout repository"
+
+      - name: "Install Dependencies"
+        run: npm install
+
+      - name: "Run Test"
+        run: npm run test
+
+  lint:
+    name: "Run Linter"
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout
+        name: "Checkout repository"
+
+      - name: "Install Dependencies"
+        run: npm install
+
+      - name: "Run Test"
+        run: npm run test
