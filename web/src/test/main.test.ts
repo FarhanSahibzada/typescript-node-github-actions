@@ -1,10 +1,11 @@
 import { app } from "@app/app";
+import type { Server } from "http";
 
 const listenSpy = jest
   .spyOn(app, "listen")
-  .mockImplementation((port: any, callback: any) => {
+  .mockImplementation((port: unknown, callback?: () => void) => {
     if (callback) callback();
-    return {} as any;
+    return {} as Server;
   });
 
 import { bootstrap } from "@app/main";
