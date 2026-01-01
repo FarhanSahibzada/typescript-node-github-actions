@@ -6,11 +6,8 @@ dotenv.config();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.render("hello");
-});
 app.get("/get", (req, res) => {
-  console.log("hello ");
+  res.send("hello world");
 });
 
 export { app };
