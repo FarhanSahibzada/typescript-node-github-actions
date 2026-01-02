@@ -1,8 +1,8 @@
-import { app } from '@app/app';
+import { app } from "@app/app";
 
-async function bootstrap () {
+async function bootstrap() {
   app.listen(process.env.PORT, () => {
-    console.log('server is successfully started on port= ', process.env.PORT);
+    console.log("server is successfully started on port= ", process.env.PORT);
   });
 }
 
