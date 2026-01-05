@@ -1,0 +1,20 @@
+#yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
+name: Continuous Deployment Workflow
+
+# This workflow is triggered whenever commits are pushed to the main branch
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "web/**"
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./web
+
+jobs:
+  deploy_to_staging:
+    environment: staging

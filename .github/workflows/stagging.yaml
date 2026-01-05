@@ -1,0 +1,40 @@
+# yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
+name: Creating Staging Environment
+
+on:
+  workflow_dispatch:
+    inputs:
+      PR_number:
+        description: "pull request number"
+        required: true
+
+jobs:
+  create:
+    name: "creating staging environment and deploy"
+    defaults:
+      run:
+        shell: bash
+    runs-on: ubuntu-latest
+    steps:
+      - name: "verify pull_request number"
+        uses: actions/github-script@v7
+        id: verify_pr
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          scripts: |
+            const response = await github.rest.pulls.get({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            pull_number: ${{github.event.inputs.PR_number}}
+            })
+            // check if PR is merged and number was correct
+            if(response.data.number !== ${{ github.event.inputs.PR_number}} || response.data.merged == false){
+            throw new Error(`pull request is not merged or the number #${{ github.event.inputs.PR_number}} is not correct`)
+            }else{
+             console.log("PR ref: " + response.data.head.ref);
+            return response.data.head.ref;
+            }
+
+      - name: "Checkout  repository"
+        uses: actions/checkout@v3

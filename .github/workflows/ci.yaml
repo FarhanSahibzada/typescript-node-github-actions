@@ -1,14 +1,24 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+# using concurrency to manage multiple runs
 name: Continuous Integration Workflow
 
 on:
   pull_request:
     branches:
       - main
+    types:
+      - opened
+      - synchronize
   push:
     branches:
       - main
+    paths:
+      - "./web/src/**" # only runs this workflow if something change inside src directory
   workflow_dispatch:
+
+concurrency:
+  group: ${{github.workflow}}-${{github.event.pull_request.number || github.ref || github.run_id}}
+  cancel-in-progress: true
 
 jobs:
   lint:
