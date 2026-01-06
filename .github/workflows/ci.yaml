@@ -96,7 +96,7 @@ jobs:
         run: npm run build
 
       - name: "Upload Build Artifacts"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v6
         with:
           name: build-output
           path: ./web/dist/
