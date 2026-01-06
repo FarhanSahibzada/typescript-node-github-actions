@@ -90,10 +90,10 @@ jobs:
           cache-dependency-path: ./web/package-lock.json
 
       - name: "install Dependencies"
-        uses: npm ci
+        run: npm ci
 
       - name: "make build"
-        uses: npm run build
+        run: npm run build
 
       - name: "Upload Build Artifacts"
         uses: actions/upload-artifact@v3
