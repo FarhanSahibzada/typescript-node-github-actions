@@ -1,7 +1,7 @@
 import { app } from "@app/app";
 import type { Server } from "http";
 
-const listenSpy = jest
+const listenSpy: unknown = jest
   .spyOn(app, "listen")
   .mockImplementation((port: unknown, callback?: () => void) => {
     if (callback) callback();
@@ -18,7 +18,7 @@ describe("main.ts / test", () => {
     await bootstrap();
     await expect(listenSpy).toHaveBeenCalledWith(
       process.env.PORT,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 });

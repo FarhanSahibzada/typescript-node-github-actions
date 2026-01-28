@@ -10,9 +10,10 @@ export default [
   },
 
   js.configs.recommended,
+  // ...tseslint.configs.recommendedTypeChecked,
 
   {
-    files: ["**/*.ts", "**/*.tsx"],
+    files: ["**/*.ts"],
     languageOptions: {
       parser: tsparser,
       ecmaVersion: 2024,
@@ -23,7 +24,7 @@ export default [
         ...globals.jest,
       },
       parserOptions: {
-        project: "./tsconfig.json",
+        project: "./tsconfig.test.json",
       },
     },
     plugins: {
@@ -35,12 +36,25 @@ export default [
       "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/typedef": [
+        "error",
+        {
+          arrayDestructuring: false,
+          objectDestructuring: false,
+          arrowParameter: true,
+          memberVariableDeclaration: true,
+          parameter: true,
+          propertyDeclaration: true,
+          variableDeclaration: true,
+          variableDeclarationIgnoreFunction: false,
+        },
+      ],
 
-      // General rulesclear
+      // General rules
       semi: ["error", "always"],
       quotes: "off",
       indent: ["error", 2],
-      "comma-dangle": ["error", "never"],
+      "comma-dangle": ["off", "never"],
       "no-console": "warn",
     },
   },
