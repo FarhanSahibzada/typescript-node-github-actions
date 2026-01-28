@@ -2,11 +2,13 @@
 name: CD -Deploy TO Staging Environment
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       PR_number:
         description: "pull request number"
         required: true
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{github.repository}}
@@ -36,9 +38,13 @@ jobs:
             if(response.data.number !== ${{ github.event.inputs.PR_number}} || response.data.merged == false){
             throw new Error(`pull request is not merged or the number #${{ github.event.inputs.PR_number}} is not correct`)
             }else{
-             console.log("PR ref: " + response.data.head.ref);
+            const result = {
+             headRef: response.data.head.ref,
+             mergeSha: response.data.merge_commit_sha,
+                 };
 
-            return response.data.head.ref;
+             console.log("Returned data:", result);
+             return JSON.stringify(result);
             }
 
       - name: "Checkout  repository"
