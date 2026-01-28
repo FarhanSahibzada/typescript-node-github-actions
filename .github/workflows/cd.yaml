@@ -16,5 +16,24 @@ defaults:
     working-directory: ./web
 
 jobs:
-  deploy_to_staging:
+  deploy_staging:
+    name: "Depoly to staging"
     environment: staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ./web
+
+      - name: "download Artifacts"
+        uses: actions/download-artifact@v4
+        with:
+          name: "build-output"
+
+      - name: "combine dist and other files"
+        run: |
+          cp -r  build-output/*
+
+      - name: "Depoly to staging server"
+        run:

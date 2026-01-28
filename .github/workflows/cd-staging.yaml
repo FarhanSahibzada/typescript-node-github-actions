@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
-name: Creating Staging Environment
+name: CD -Deploy TO Staging Environment
 
 on:
   workflow_dispatch:
@@ -7,13 +7,17 @@ on:
       PR_number:
         description: "pull request number"
         required: true
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{github.repository}}
 
 jobs:
-  create:
-    name: "creating staging environment and deploy"
+  depoly-staging:
+    name: "Depoly to staging"
     defaults:
       run:
         shell: bash
+        working-directory: ./web
     runs-on: ubuntu-latest
     steps:
       - name: "verify pull_request number"
@@ -33,6 +37,7 @@ jobs:
             throw new Error(`pull request is not merged or the number #${{ github.event.inputs.PR_number}} is not correct`)
             }else{
              console.log("PR ref: " + response.data.head.ref);
+
             return response.data.head.ref;
             }
 
