@@ -1,0 +1,39 @@
+#yaml-language-server: $schema=https://www.schemastore.org/github-workflow.json
+name: Continuous Deployment Workflow
+
+# This workflow is triggered whenever commits are pushed to the main branch
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "web/**"
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./web
+
+jobs:
+  deploy_staging:
+    name: "Depoly to staging"
+    environment: staging
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ./web
+
+      - name: "download Artifacts"
+        uses: actions/download-artifact@v4
+        with:
+          name: "build-output"
+
+      - name: "combine dist and other files"
+        run: |
+          cp -r  build-output/*
+
+      - name: "Depoly to staging server"
+        run:

@@ -1,0 +1,19 @@
+# Node
+
+node_modules
+
+# Git
+
+.gitignore
+
+# Environment
+
+.env
+
+# CI/CD
+
+.github
+
+# Docs
+
+README.md
