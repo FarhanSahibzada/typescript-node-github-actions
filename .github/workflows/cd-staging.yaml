@@ -18,9 +18,12 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: web
+        working-directory: ./web
     runs-on: ubuntu-latest
     steps:
+      - name: "Checkout  repository"
+        uses: actions/checkout@v3
+
       - name: "what number in the input"
         run: echo "hello this is the number ${{github.event.inputs.PR_number}}"
 
@@ -48,6 +51,3 @@ jobs:
              console.log("Returned data:", result);
              return JSON.stringify(result);
             }
-
-      - name: "Checkout  repository"
-        uses: actions/checkout@v3
