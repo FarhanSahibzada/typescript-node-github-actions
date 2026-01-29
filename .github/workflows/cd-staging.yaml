@@ -21,6 +21,9 @@ jobs:
         working-directory: ./web
     runs-on: ubuntu-latest
     steps:
+      - name: "what number in the input"
+        run: echo "hello this is the number ${{github.event.inputs.PR_number}}"
+
       - name: "verify pull_request number"
         uses: actions/github-script@v7
         id: verify_pr
