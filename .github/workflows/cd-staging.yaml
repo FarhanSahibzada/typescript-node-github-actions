@@ -18,7 +18,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./web
+        working-directory: web
     runs-on: ubuntu-latest
     steps:
       - name: "what number in the input"
